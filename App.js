@@ -1,20 +1,11 @@
 import React from 'react';
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import StackNavigator from './src/navigator/StackNavigator';
 
 
 const App= () => {
 
   return (
-    <SafeAreaView>
-    </SafeAreaView>
+    <StackNavigator/>
   );
 };
 
