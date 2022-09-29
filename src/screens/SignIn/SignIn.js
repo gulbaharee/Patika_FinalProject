@@ -9,6 +9,7 @@ import {app} from '../../utils/firebase';
 import {doc, getDoc, getFirestore} from 'firebase/firestore';
 import { useSelector,useDispatch } from 'react-redux';
 import { setUser } from '../../store/userSlice';
+import BottomNavigator from '../../navigator/BottomNavigator';
 
 
 const SignIn = () => {
@@ -33,6 +34,7 @@ const SignIn = () => {
         if (userRef.exists()) {
           //add user data to redux
           dispatch(setUser({activeUser:userRef.data()}));
+          navigate('Home');
         }
       })
       .catch(error => {

@@ -7,6 +7,6 @@ export default StyleSheet.create({
     height: height,
   },
   innerContainer:{
-    marginTop:200,
+    marginTop:300,
   }
 });
