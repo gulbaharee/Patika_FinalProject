@@ -4,20 +4,37 @@ import Input from '../../components/TextInput/TextInput';
 import styles from './SignIn.style';
 import Button from '../../components/Button/Button';
 import {useNavigation} from '@react-navigation/native';
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {app} from '../../utils/firebase';
+import {doc, getDoc, getFirestore} from 'firebase/firestore';
+import { useSelector,useDispatch } from 'react-redux';
+import { setUser } from '../../store/userSlice';
+
 
 const SignIn = () => {
+  //navigate function
   const {navigate} = useNavigation();
 
-  const auth = getAuth(app);
+  //create state for user datas with redux-toolkit
+  const activeUser = useSelector(state=>state.activeUser.loggedUser);
+  const dispatch = useDispatch();
 
+  //firestore configuration
+  const db = getFirestore(app);
+
+  //firebase authentication
+  const auth = getAuth(app);
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(console.log('success'))
+      .then(async res => {
+        console.log(res.user)
+        //get user data from firestore
+        const userRef = await getDoc(doc(db, 'users', res.user.uid));
+        if (userRef.exists()) {
+          //add user data to redux
+          dispatch(setUser({activeUser:userRef.data()}));
+        }
+      })
       .catch(error => {
         console.log(error);
       });
@@ -31,8 +48,8 @@ const SignIn = () => {
           placeholder="password"
           onChangeText={text => (password = text)}
         />
-        <Button placeholder="Sign In" onPress={login}/>
-        <Button placeholder="Sign Up" onPress={() => navigate('SignUp')} />
+        <Button placeholder="Sign In" onPress={login} />
+        <Button placeholder="Do not have an account?" onPress={() => navigate('SignUp')} />
       </View>
     </View>
   );
