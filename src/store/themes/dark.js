@@ -1,4 +1,7 @@
 export default{
     type:'dark',
-    backgroundColor:'#3a506b',
+    backgroundColor:'#4a4e69',
+    buttonColor:'#9a8c98',
+    textColor:'#f2e9e4',
+    headerColor:'#22223b',
 }

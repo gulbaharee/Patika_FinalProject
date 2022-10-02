@@ -18,6 +18,8 @@ const SignIn = () => {
 
   //create state for user datas with redux-toolkit
   const activeUser = useSelector(state=>state.activeUser.loggedUser);
+  const theme = useSelector(state=>state.theme.defaultTheme);
+  
   const dispatch = useDispatch();
 
   //firestore configuration
@@ -43,7 +45,7 @@ const SignIn = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.innerContainer}>
         <Input placeholder="email" onChangeText={text => (email = text)} />
         <Input
