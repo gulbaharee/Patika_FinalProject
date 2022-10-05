@@ -8,10 +8,10 @@ import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {app} from '../../utils/firebase';
 import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {async} from '@firebase/util';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const SignUp = () => {
-const theme = useSelector(state=>state.theme.defaultTheme);
+  const theme = useSelector(state => state.theme.defaultTheme);
 
   //navigate function
   const {navigate} = useNavigation();
@@ -26,6 +26,8 @@ const theme = useSelector(state=>state.theme.defaultTheme);
           email: email,
           username: username,
           id: res.user.uid,
+          firstName: firstName,
+          lastName: lastName,
         });
         navigate('SignIn');
       })
@@ -33,12 +35,17 @@ const theme = useSelector(state=>state.theme.defaultTheme);
   };
 
   return (
-    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <View style={styles.innerContainer}>
         <Input placeholder="email" onChangeText={text => (email = text)} />
         <Input
           placeholder="username"
           onChangeText={text => (username = text)}
+        />
+        <Input placeholder="Name" onChangeText={text => (firstName = text)} />
+        <Input
+          placeholder="Last Name"
+          onChangeText={text => (lastName = text)}
         />
         <Input
           placeholder="password"
