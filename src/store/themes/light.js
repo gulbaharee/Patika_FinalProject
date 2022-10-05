@@ -4,4 +4,5 @@ export default{
     buttonColor:'#f2e9e4',
     textColor:'#000000',
     headerColor:'#f2e9e4',
+    messageBox:'#ced4da',
 }

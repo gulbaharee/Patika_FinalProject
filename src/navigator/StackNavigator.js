@@ -7,19 +7,54 @@ import Home from '../screens/Home';
 import Account from '../screens/Account/Account';
 import Theme from '../screens/Theme/Theme';
 import {useSelector} from 'react-redux';
+import ChatDetail from '../screens/ChatDetail/ChatDetail';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const theme = useSelector(state=>state.theme.defaultTheme);
+  const theme = useSelector(state => state.theme.defaultTheme);
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='SignIn' options={{headerShown:false}} component={SignIn} />
-        <Stack.Screen name='SignUp' options={{headerShown:false}} component={SignUp} />
-        <Stack.Screen name='Home' options={{headerShown:false}} component={Home}/>
-        <Stack.Screen name='Theme' options={{headerStyle:{backgroundColor:theme.headerColor},headerTintColor:theme.textColor}} component={Theme}/>
-        <Stack.Screen name='Account' options={{headerStyle:{backgroundColor:theme.headerColor},headerTintColor:theme.textColor}} component={Account}/>
+        <Stack.Screen
+          name="SignIn"
+          options={{headerShown: false}}
+          component={SignIn}
+        />
+        <Stack.Screen
+          name="SignUp"
+          options={{headerShown: false}}
+          component={SignUp}
+        />
+        <Stack.Screen
+          name="Home"
+          options={{headerShown: false}}
+          component={Home}
+        />
+        <Stack.Screen
+          name="Theme"
+          options={{
+            headerStyle: {backgroundColor: theme.headerColor},
+            headerTintColor: theme.textColor,
+          }}
+          component={Theme}
+        />
+        <Stack.Screen
+          name="Account"
+          options={{
+            headerStyle: {backgroundColor: theme.headerColor},
+            headerTintColor: theme.textColor,
+          }}
+          component={Account}
+        />
+        <Stack.Screen
+          name="ChatDetail"
+          options={{
+            headerStyle: {backgroundColor: theme.headerColor},
+            headerTintColor: theme.textColor,
+          }}
+          component={ChatDetail}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
