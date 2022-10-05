@@ -10,7 +10,7 @@ import {doc, getDoc, getFirestore} from 'firebase/firestore';
 import { useSelector,useDispatch } from 'react-redux';
 import { setUser } from '../../store/userSlice';
 import BottomNavigator from '../../navigator/BottomNavigator';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn = () => {
   //navigate function
@@ -36,6 +36,7 @@ const SignIn = () => {
         if (userRef.exists()) {
           //add user data to redux
           dispatch(setUser({activeUser:userRef.data()}));
+          storeData(userRef.data());
           navigate('Home');
         }
       })
@@ -43,6 +44,15 @@ const SignIn = () => {
         console.log(error);
       });
   };
+
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('activeUser', jsonValue)
+    } catch (e) {
+      
+    }
+  }
 
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
