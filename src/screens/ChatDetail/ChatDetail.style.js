@@ -4,4 +4,7 @@ const screenHeight = Dimensions.get('screen').height;
 
 export default StyleSheet.create({
   container: {height: screenHeight},
+  messageContainer: {
+    height: screenHeight - 220,
+  },
 });

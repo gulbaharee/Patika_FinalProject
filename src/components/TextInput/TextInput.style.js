@@ -11,5 +11,12 @@ export default StyleSheet.create({
         width:300,
         textAlign:'center',
         marginBottom:10,
+    },
+    message:{
+        borderWidth:0.3,
+        borderRadius:10,
+        height:40,
+        width:300,
+        marginBottom:10,
     }
 })

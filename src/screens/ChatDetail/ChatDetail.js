@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 import {useSelector} from 'react-redux';
 import styles from './ChatDetail.style';
 import {useNavigation} from '@react-navigation/native';
+import SendBox from '../../components/SendBox/SendBox';
 
 const ChatDetail = ({route}) => {
   const {id, firstName, lastName} = route.params;
@@ -30,7 +31,10 @@ const ChatDetail = ({route}) => {
         goBack={true}
         onPress={() => goBack('ChatList')}
       />
-      <ChatBox message="dfldf" />
+      <View style={styles.messageContainer}>
+        <ChatBox message="dfldf" />
+      </View>
+      <SendBox />
     </View>
   );
 };
