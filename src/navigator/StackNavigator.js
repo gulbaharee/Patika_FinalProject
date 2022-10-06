@@ -22,12 +22,14 @@ const StackNavigator = () => {
     console.log(authentication);
     if (authentication != null) {
       dispatch(signIn());
-    }else{
+    } else {
       dispatch(signOut());
     }
   };
 
-  useEffect(() => {checkAuth()},[]);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -70,10 +72,7 @@ const StackNavigator = () => {
             />
             <Stack.Screen
               name="ChatDetail"
-              options={{
-                headerStyle: {backgroundColor: theme.headerColor},
-                headerTintColor: theme.textColor,
-              }}
+              options={{headerShown: false}}
               component={ChatDetail}
             />
           </>

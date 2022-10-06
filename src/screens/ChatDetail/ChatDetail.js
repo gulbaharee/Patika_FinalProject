@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const ChatDetail = ({route}) => {
   const {id, firstName, lastName} = route.params;
+  const {goBack} = useNavigation();
   const db = getFirestore(app);
   const theme = useSelector(state => state.theme.defaultTheme);
 
@@ -24,6 +25,11 @@ const ChatDetail = ({route}) => {
 
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      <Header
+        title={firstName + ' ' + lastName}
+        goBack={true}
+        onPress={() => goBack('ChatList')}
+      />
       <ChatBox message="dfldf" />
     </View>
   );
