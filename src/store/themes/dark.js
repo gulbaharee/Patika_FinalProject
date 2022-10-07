@@ -1,4 +1,5 @@
 export default{
+    typeBool:false,
     type:'dark',
     backgroundColor:'#4a4e69',
     buttonColor:'#9a8c98',
