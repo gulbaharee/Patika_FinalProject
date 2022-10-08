@@ -21,7 +21,6 @@ const Contacts = () => {
   const getContacts = async () => {
     const contactlist = await getDocs(collection(db, 'users'));
     contactlist.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
       dispatch(setContacts(doc.data()));
     });
   };

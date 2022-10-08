@@ -18,5 +18,6 @@ export default StyleSheet.create({
         height:40,
         width:300,
         marginBottom:10,
+        paddingLeft:10,
     }
 })

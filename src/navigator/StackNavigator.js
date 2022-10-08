@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import ChatDetail from '../screens/ChatDetail/ChatDetail';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {signIn, signOut} from '../store/authSlice';
+
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
@@ -17,11 +18,12 @@ const StackNavigator = () => {
   const auth = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
 
+  //checking async storage for navigate access
   const checkAuth = async () => {
     const authentication = await AsyncStorage.getItem('activeUser');
-    console.log(authentication);
     if (authentication != null) {
       dispatch(signIn());
+      dispatch(setUser({activeUser:JSON.parse(authentication)}));
     } else {
       dispatch(signOut());
     }
@@ -29,7 +31,7 @@ const StackNavigator = () => {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  });
 
   return (
     <NavigationContainer>
@@ -41,11 +43,6 @@ const StackNavigator = () => {
               options={{headerShown: false}}
               component={SignIn}
             />
-            <Stack.Screen
-              name="SignUp"
-              options={{headerShown: false}}
-              component={SignUp}
-            />
           </>
         ) : (
           <>
@@ -54,29 +51,34 @@ const StackNavigator = () => {
               options={{headerShown: false}}
               component={Home}
             />
-            <Stack.Screen
-              name="Theme"
-              options={{
-                headerStyle: {backgroundColor: theme.headerColor},
-                headerTintColor: theme.textColor,
-              }}
-              component={Theme}
-            />
-            <Stack.Screen
-              name="Account"
-              options={{
-                headerStyle: {backgroundColor: theme.headerColor},
-                headerTintColor: theme.textColor,
-              }}
-              component={Account}
-            />
-            <Stack.Screen
-              name="ChatDetail"
-              options={{headerShown: false}}
-              component={ChatDetail}
-            />
           </>
         )}
+        <Stack.Screen
+          name="Theme"
+          options={{
+            headerStyle: {backgroundColor: theme.headerColor},
+            headerTintColor: theme.textColor,
+          }}
+          component={Theme}
+        />
+        <Stack.Screen
+          name="Account"
+          options={{
+            headerStyle: {backgroundColor: theme.headerColor},
+            headerTintColor: theme.textColor,
+          }}
+          component={Account}
+        />
+        <Stack.Screen
+          name="ChatDetail"
+          options={{headerShown: false}}
+          component={ChatDetail}
+        />
+        <Stack.Screen
+          name="SignUp"
+          options={{headerShown: false}}
+          component={SignUp}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

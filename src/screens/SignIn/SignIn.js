@@ -11,6 +11,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { setUser } from '../../store/userSlice';
 import BottomNavigator from '../../navigator/BottomNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {signIn} from '../../store/authSlice';
 
 const SignIn = () => {
   //navigate function
@@ -19,23 +20,23 @@ const SignIn = () => {
   //create state for user datas with redux-toolkit
   const activeUser = useSelector(state=>state.activeUser.loggedUser);
   const theme = useSelector(state=>state.theme.defaultTheme);
-  
+  const auth = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
 
   //firestore configuration
   const db = getFirestore(app);
 
   //firebase authentication
-  const auth = getAuth(app);
+  const authFirebase = getAuth(app);
   const login = () => {
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(authFirebase, email, password)
       .then(async res => {
-        console.log(res.user)
         //get user data from firestore
         const userRef = await getDoc(doc(db, 'users', res.user.uid));
         if (userRef.exists()) {
           //add user data to redux
           dispatch(setUser({activeUser:userRef.data()}));
+          dispatch(signIn());
           storeData(userRef.data());
           navigate('Home');
         }
@@ -44,7 +45,7 @@ const SignIn = () => {
         console.log(error);
       });
   };
-
+ 
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
