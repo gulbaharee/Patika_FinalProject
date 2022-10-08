@@ -15,14 +15,14 @@ const ChatDetail = ({route}) => {
   const db = getFirestore(app);
   const theme = useSelector(state => state.theme.defaultTheme);
 
-  //   const sendMessage =  async () => {
-  //     console.log('sads');
+    const sendMessage =  async () => {
+      console.log('sads');
 
-  //     await setDoc(doc(db, 'messages', 1), {
-  //       lastMsgDate: 'tomorrow',
-  //     });
-  //     console.log('sads');
-  //   };
+      await setDoc(doc(db, 'messages', 1), {
+        lastMsgDate: 'tomorrow',
+      });
+      console.log('sads');
+    };
 
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
@@ -34,7 +34,7 @@ const ChatDetail = ({route}) => {
       <View style={styles.messageContainer}>
         <ChatBox message="dfldf" />
       </View>
-      <SendBox />
+      <SendBox onChangeText={text => (msg = text)} onPress={sendMessage}/>
     </View>
   );
 };

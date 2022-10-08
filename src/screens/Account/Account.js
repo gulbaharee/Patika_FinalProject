@@ -10,11 +10,13 @@ import {getFirestore, updateDoc, doc} from 'firebase/firestore';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import ImagePickerModal from '../../components/ImagePicker/ImagePicker';
 import * as ImagePicker from 'react-native-image-picker';
+import { updateUser } from '../../store/userSlice';
 
 const Account = () => {
-  const [image, setImage] = useState(null);
   const activeUser = useSelector(state => state.activeUser.loggedUser);
   const theme = useSelector(state => state.theme.defaultTheme);
+
+  const dispatch = useDispatch();
 
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -28,7 +30,9 @@ const Account = () => {
         .then(async res => {
           await updateDoc(doc(db, 'users', res.user.uid), {
             username: username,
+            image:uri,
           });
+          dispatch(updateUser({ image: uri }));
         })
         .catch(error => console.log(error));
     }
@@ -56,7 +60,7 @@ const Account = () => {
   const uri = pickerResponse?.assets && pickerResponse.assets[0].uri;
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
-      <ProfilePhoto onPress={() => setVisible(true)} url={uri} />
+      <ProfilePhoto onPress={() => setVisible(true)} url={uri ? {uri} : activeUser.image} />
       <InfoBox
         placeholder={activeUser.username}
         onChangeText={text => (username = text)}

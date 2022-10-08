@@ -28,7 +28,7 @@ const Profile = () => {
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <Header title="Profile" />
-      <ProfileHeader username={activeUser.username} />
+      <ProfileHeader username={activeUser.username} uri={activeUser.image}/>
       <View>
         <SettingButton
           placeholder="Account"

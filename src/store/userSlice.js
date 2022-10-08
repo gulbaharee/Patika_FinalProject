@@ -12,9 +12,15 @@ export const userSlice = createSlice({
         loggedUser: activeUser,
       };
     },
+    updateUser: (state, action) => {
+      state.loggedUser = {
+        ...state.loggedUser,
+        ...action.payload,
+      };
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser,updateUser } = userSlice.actions;
 
 

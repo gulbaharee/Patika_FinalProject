@@ -5,13 +5,13 @@ import {View} from 'react-native';
 import styles from './SendBox.style';
 import {useSelector} from 'react-redux';
 
-const SendBox = ({onPress}) => {
+const SendBox = ({onPress,onChangeText}) => {
   const theme = useSelector(state => state.theme.defaultTheme);
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <TextInput placeholder="message" message={true}/>
+        <TextInput placeholder="message" message={true} onChangeText={onChangeText}/>
         <Icon
           name="send"
           size={24}
