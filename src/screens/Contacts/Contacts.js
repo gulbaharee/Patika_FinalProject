@@ -21,12 +21,14 @@ const Contacts = () => {
   const getContacts = async () => {
     const contactlist = await getDocs(collection(db, 'users'));
     contactlist.forEach(doc => {
-      dispatch(setContacts(doc.data()));
+      if (doc.data().id != activeUser.id) {
+        dispatch(setContacts(doc.data()));
+      }
     });
   };
 
-  const goChatDetail = (id,firstName,lastName) =>{
-    navigate('ChatDetail',{id,firstName,lastName})
+  const goChatDetail = (id, firstName, lastName) => {
+    navigate('ChatDetail', {id, firstName, lastName});
   };
 
   useEffect(() => {
@@ -36,9 +38,9 @@ const Contacts = () => {
   const renderContacts = ({item}) => {
     return (
       <ContactBox
-        username={item.firstName + " " + item.lastName}
+        username={item.firstName + ' ' + item.lastName}
         info="son görülme 1 saat önce"
-        onPress={() => goChatDetail(item.id,item.firstName,item.lastName)}
+        onPress={() => goChatDetail(item.id, item.firstName, item.lastName)}
       />
     );
   };
