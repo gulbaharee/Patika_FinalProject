@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState,useCallback} from 'react';
 import {View, Text} from 'react-native';
 import styles from './Account.style';
 import ProfilePhoto from '../../components/ProfilePhoto/ProfilePhoto';
@@ -8,6 +8,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {app} from '../../utils/firebase';
 import {getFirestore, updateDoc, doc} from 'firebase/firestore';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import ImagePickerModal from '../../components/ImagePicker/ImagePicker';
+import * as ImagePicker from 'react-native-image-picker';
 
 const Account = () => {
   const [image, setImage] = useState(null);
@@ -16,6 +18,9 @@ const Account = () => {
 
   const db = getFirestore(app);
   const auth = getAuth(app);
+
+  const [pickerResponse, setPickerResponse] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   const update = () => {
     if (password === passwordCheck) {
@@ -29,26 +34,29 @@ const Account = () => {
     }
   };
 
-  // const pickImage = async () => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
+  const onImageLibraryPress = useCallback(() => {
+    const options = {
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: false,
+    };
+    ImagePicker.launchImageLibrary(options, setPickerResponse);
+    setVisible(false);
+  }, []);
 
-  //   console.log(result);
+  const onCameraPress = useCallback(() => {
+    const options = {
+      saveToPhotos: true,
+      mediaType: 'photo',
+      includeBase64: false,
+    };
+    ImagePicker.launchCamera(options, setPickerResponse);
+  }, []);
 
-  //   if (!result.cancelled) {
-  //     setImage(result.uri);
-  //   }
-    
-  // };
-
+  const uri = pickerResponse?.assets && pickerResponse.assets[0].uri;
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
-      <ProfilePhoto/>
+      <ProfilePhoto onPress={() => setVisible(true)} url={uri} />
       <InfoBox
         placeholder={activeUser.username}
         onChangeText={text => (username = text)}
@@ -68,6 +76,12 @@ const Account = () => {
         password={true}
       />
       <Button placeholder="Save" onPress={update} />
+      <ImagePickerModal
+        isVisible={visible}
+        onClose={() => setVisible(false)}
+        onImageLibraryPress={onImageLibraryPress}
+        onCameraPress={onCameraPress}
+      />
     </View>
   );
 };

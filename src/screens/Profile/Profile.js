@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, Image} from 'react-native';
 import Header from '../../components/Header/Header';
 import ProfileHeader from '../../components/ProfileHeader/ProfileHeader';
@@ -24,10 +24,6 @@ const Profile = () => {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    console.log(activeUser);
-  }, []);
 
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
