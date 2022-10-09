@@ -62,6 +62,7 @@ const SignIn = () => {
         <Input
           placeholder="password"
           onChangeText={text => (password = text)}
+          password={true}
         />
         <Button placeholder="Sign In" onPress={login} />
         <Button placeholder="Do not have an account?" onPress={() => navigate('SignUp')} />
