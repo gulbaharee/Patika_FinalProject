@@ -27,8 +27,8 @@ const Contacts = () => {
     });
   };
 
-  const goChatDetail = (id, firstName, lastName) => {
-    navigate('ChatDetail', {id, firstName, lastName});
+  const goChatDetail = (id, firstName, lastName,currentUser) => {
+    navigate('ChatDetail', {id, firstName, lastName,currentUser});
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Contacts = () => {
       <ContactBox
         username={item.firstName + ' ' + item.lastName}
         info="son görülme 1 saat önce"
-        onPress={() => goChatDetail(item.id, item.firstName, item.lastName)}
+        onPress={() => goChatDetail(item.id, item.firstName, item.lastName,activeUser.id)}
       />
     );
   };
