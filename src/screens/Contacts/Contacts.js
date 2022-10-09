@@ -18,6 +18,7 @@ const Contacts = () => {
   //firestore configuration
   const db = getFirestore(app);
 
+  //this method get datas from firestore for contaclist
   const getContacts = async () => {
     const contactlist = await getDocs(collection(db, 'users'));
     contactlist.forEach(doc => {
@@ -27,8 +28,8 @@ const Contacts = () => {
     });
   };
 
-  const goChatDetail = (id, firstName, lastName,currentUser) => {
-    navigate('ChatDetail', {id, firstName, lastName,currentUser});
+  const goChatDetail = (id, firstName, lastName, currentUser) => {
+    navigate('ChatDetail', {id, firstName, lastName, currentUser});
   };
 
   useEffect(() => {
@@ -40,7 +41,9 @@ const Contacts = () => {
       <ContactBox
         username={item.firstName + ' ' + item.lastName}
         info="son görülme 1 saat önce"
-        onPress={() => goChatDetail(item.id, item.firstName, item.lastName,activeUser.id)}
+        onPress={() =>
+          goChatDetail(item.id, item.firstName, item.lastName, activeUser.id)
+        }
       />
     );
   };

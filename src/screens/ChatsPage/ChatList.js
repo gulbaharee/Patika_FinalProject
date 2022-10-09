@@ -11,8 +11,8 @@ import {useSelector, useDispatch} from 'react-redux';
 const ChatList = () => {
   const {navigate} = useNavigation();
 
-  const goChatDetail = (id, firstName,currentUser,msgID) => {
-    navigate('ChatDetail', {id, firstName,currentUser,msgID});
+  const goChatDetail = (id, firstName, currentUser, msgID) => {
+    navigate('ChatDetail', {id, firstName, currentUser, msgID});
   };
   const db = getFirestore(app);
   const chats = useSelector(state => state.chats.chatList);
@@ -21,6 +21,7 @@ const ChatList = () => {
 
   const dispatch = useDispatch();
 
+  //this method get datas from firestore for chatlist
   const getMessageList = async () => {
     const msgList = collection(db, 'conversation');
 
@@ -29,24 +30,38 @@ const ChatList = () => {
       if (doc.data().members.id == activeUser.id) {
         const chat = {
           contactName:
-            contacts[contacts.findIndex(obj=>obj.id === doc.data().members.currentUser)]
-              .firstName + " " + contacts[contacts.findIndex(obj=>obj.id === doc.data().members.currentUser)].lastName,
+            contacts[
+              contacts.findIndex(
+                obj => obj.id === doc.data().members.currentUser,
+              )
+            ].firstName +
+            ' ' +
+            contacts[
+              contacts.findIndex(
+                obj => obj.id === doc.data().members.currentUser,
+              )
+            ].lastName,
           chatWith: doc.data().members.currentUser,
           msgRecent: doc.data().recentMessage,
           msgId: doc.data().id,
-          date:doc.data().date,
+          date: doc.data().date,
         };
         dispatch(setChats(chat));
       }
       if (doc.data().members.currentUser == activeUser.id) {
         const chat = {
           contactName:
-            contacts[contacts.findIndex(obj=>obj.id === doc.data().members.id)]
-              .firstName + " " + contacts[contacts.findIndex(obj=>obj.id === doc.data().members.id)].lastName,
+            contacts[
+              contacts.findIndex(obj => obj.id === doc.data().members.id)
+            ].firstName +
+            ' ' +
+            contacts[
+              contacts.findIndex(obj => obj.id === doc.data().members.id)
+            ].lastName,
           chatWith: doc.data().members.id,
           msgRecent: doc.data().recentMessage,
           msgId: doc.data().id,
-          date:doc.data().date,
+          date: doc.data().date,
         };
         dispatch(setChats(chat));
       }
@@ -64,7 +79,12 @@ const ChatList = () => {
         message={item.msgRecent}
         date={item.date}
         onPress={() =>
-          goChatDetail(item.chatWith, item.contactName,activeUser.id,item.msgId)
+          goChatDetail(
+            item.chatWith,
+            item.contactName,
+            activeUser.id,
+            item.msgId,
+          )
         }
       />
     );

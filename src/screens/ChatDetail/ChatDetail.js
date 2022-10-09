@@ -18,6 +18,7 @@ import SendBox from '../../components/SendBox/SendBox';
 import {setChatcontent} from '../../store/chatcontentSlice';
 
 const ChatDetail = ({route}) => {
+  //datas from chatlist or contactlist page
   const {id, firstName, currentUser, msgID} = route.params;
   const {goBack} = useNavigation();
   const db = getFirestore(app);
@@ -25,6 +26,7 @@ const ChatDetail = ({route}) => {
   const chatContent = useSelector(state => state.chatContent.chatContentList);
   const dispatch = useDispatch();
 
+  //send message to firestore
   const sendMessage = async () => {
     let today = new Date();
     const messages = await addDoc(collection(db, 'messages'), {
@@ -40,7 +42,7 @@ const ChatDetail = ({route}) => {
       date: today.getHours() + '.' + today.getMinutes(),
     });
   };
-
+  //get message from firestore and store to redux
   const getMessages = async () => {
     const mssgList = await getDocs(collection(db, 'messages'));
     mssgList.forEach(doc => {
@@ -51,6 +53,7 @@ const ChatDetail = ({route}) => {
     });
   };
 
+  //was very close to succeed for chatting
   useEffect(() => {
     getMessages();
   }, []);

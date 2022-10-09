@@ -7,11 +7,14 @@ import styles from './Theme.style';
 
 const Theme = () => {
   const theme = useSelector(state => state.theme.defaultTheme);
-
+  //change theme
   const dispatch = useDispatch();
   return (
-    <View style={[styles.container,{backgroundColor: theme.backgroundColor}]}>
-      <Button placeholder={theme.typeBool ? "Dark Mode" : "Light Mode"} onPress={() => dispatch(setTheme())} />
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      <Button
+        placeholder={theme.typeBool ? 'Dark Mode' : 'Light Mode'}
+        onPress={() => dispatch(setTheme())}
+      />
     </View>
   );
 };

@@ -15,6 +15,7 @@ const Profile = () => {
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
 
+  //logout and delete data from local storage
   const LogOut = async () => {
     try {
       await AsyncStorage.removeItem('activeUser');

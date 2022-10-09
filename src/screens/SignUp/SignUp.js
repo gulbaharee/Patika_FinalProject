@@ -19,6 +19,7 @@ const SignUp = () => {
   const db = getFirestore(app);
   const auth = getAuth(app);
 
+  //create new user and add data to firestore
   const SignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async res => {
